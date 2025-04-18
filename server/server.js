@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Handle __dirname in ES modules
+// Resolve __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -14,12 +14,18 @@ const __dirname = path.dirname(__filename);
 app.use(cors());
 app.use(express.json());
 
-// Serve Vite React build
-app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
+// Serve static files
+const staticPath = path.join(__dirname, '..', 'client', 'dist');
+app.use(express.static(staticPath));
 
-// Handle SPA routing (React Router)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+// API routes (if any)
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Hello from API!' });
+});
+
+// Fallback to React frontend
+app.use((req, res) => {
+  res.sendFile(path.join(staticPath, 'index.html'));
 });
 
 app.listen(PORT, () => {
