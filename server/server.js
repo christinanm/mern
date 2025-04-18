@@ -9,9 +9,9 @@ app.use(cors());
 app.use(express.json());
 
 // Example route
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
   res.send('Server is running on Render!');
-});
+});*/
 
 // Start the server
 app.listen(PORT, () => {
