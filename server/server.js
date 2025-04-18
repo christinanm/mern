@@ -1,14 +1,19 @@
-import express from "express";
-import cors from "cors";
-import records from "./routes/record.js";
+import express from 'express';
+import cors from 'cors';
 
-const PORT = process.env.PORT || 5050;
 const app = express();
+const PORT = process.env.PORT || 3000;
 
+// Middleware
 app.use(cors());
 app.use(express.json());
-app.use("/record", records);
 
+// Example route
+app.get('/', (req, res) => {
+  res.send('Server is running on Render!');
+});
+
+// Start the server
 app.listen(PORT, () => {
-    console.log(`Server is listening on port: ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
